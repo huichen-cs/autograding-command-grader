@@ -65,7 +65,13 @@ function run() {
 
     startTime = new Date()
     // output = execSync(command, {timeout, env}).toString()
-    output = execSync(command, {timeout, env, stdio: 'inherit'}).toString()    
+    //output = execSync(command, {timeout, env, stdio: 'inherit'}).toString()
+    let output_v = execSync(command, {timeout, env, stdio: 'inherit'})
+    output = ""
+    if(output_v == null) {}
+    else {
+      output = output_v.toString()
+    }
     endTime = new Date()
 
     result = generateResult('pass', testName, command, output, endTime - startTime, maxScore)
@@ -76,6 +82,7 @@ function run() {
   }
 
   core.setOutput('result', btoa(JSON.stringify(result)))
+  console.log("STATUS="+result.status)
 }
 
 run()
